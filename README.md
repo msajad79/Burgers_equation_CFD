@@ -38,3 +38,6 @@ you can call this function and analysis U, V and W.
     > plot all time for value type (pcolormesh)
 3. ```Mesh2D(obj).plot_n_timeframe(<spesific time index>) ```
     > plot U, V and W in specific time
+
+
+Note: For more information from description of project and theory solve, refer to ==/doc== folder
