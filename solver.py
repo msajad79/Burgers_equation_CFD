@@ -1,7 +1,6 @@
 import numpy as np
 from tqdm import tqdm
 from scipy.linalg import block_diag
-from utils import thomas_method_block
 import matplotlib.pyplot as plt
 
 from mesh import Node, Mesh2D
@@ -162,18 +161,15 @@ class Solver():
     def KellerBox(self, As, Bs, Cs):
         return self.tridiag_block(As, Bs, Cs)
 
-    def solve(self):
+    def solve(self, solver:callable, MAX_CONV_COND=1.0e-2):
         for n in tqdm(range(len(self.mesh.mesh)-1)):
             self.deltas = []
             while True:
                 rhs = self.RHS(n)
+                #A = self.KellerBox(As, Bs, Cs)
                 As, Bs, Cs = self.matrix_base(n)
-
-                A = self.KellerBox(As, Bs, Cs)
-                delta_params_correct = np.linalg.solve(A,rhs.flat)
-                delta_params = thomas_method_block(As, Bs, Cs, rhs,delta_params_correct, A)
+                delta_params = solver(As, Bs, Cs, rhs)
                 self.update_params(delta_params, n+1)
-                if np.max(np.abs(delta_params)) < 1.0e-2:
+                if np.max(np.abs(delta_params)) < MAX_CONV_COND:
                     break
-            yield
         

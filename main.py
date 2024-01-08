@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 from mesh import Mesh2D, Node
 from solver import Solver
+from utils import thomas_method_block
 
 
 if __name__ == "__main__":
@@ -18,11 +19,9 @@ if __name__ == "__main__":
         defult_val_V = .0,
         defult_val_W = .0,
     )
-    #mesh_2D.plot_mesh()
     solver = Solver(mesh_2D)
-    s= solver.solve()
-    [i for i in s]
-
-
-
-    print(mesh_2D)
+    s = solver.solve(
+        solver=thomas_method_block,
+        MAX_CONV_COND=0.01
+    )
+    

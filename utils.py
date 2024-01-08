@@ -1,6 +1,6 @@
 import numpy as np
 
-def thomas_method_block(As:np.array, Bs:np.array, Cs:np.array, Ds:np.array, corr, A):
+def thomas_method_block(As:np.array, Bs:np.array, Cs:np.array, Ds:np.array):
     # Forward process
     gama = np.linalg.inv(Bs[0])
     b_star = [gama.dot(Bs[0])]
