@@ -28,7 +28,7 @@ A mechanical engineering CFD class assignment that solves the Burgers equation.
         MAX_CONV_COND=0.01
     )
     ```
-Note: you can pass any solver functions. in this case we use thomas algorythms for solve keller box. this function implement in utils.py file.
+Note: you can pass any solver functions. in this case we use thomas algorithms for solve keller box. this function implement in utils.py file.
 
 # Plots outputs
 you can call this function and analysis U, V and W.
