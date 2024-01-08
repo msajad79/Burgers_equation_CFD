@@ -9,8 +9,8 @@ from solver import Solver
 
 
 if __name__ == "__main__":
-    f_delta_x = lambda x: .03#(0.0001-0.1)*x + .1
-    f_delta_t = lambda x: .03#(0.0001-0.1)*x + .1
+    f_delta_x = lambda x: .03 #(0.0001-0.1)*x + .1
+    f_delta_t = lambda x: .03 #(0.0001-0.1)*x + .1
     l_x, l_t = 1.0,1.0
     mesh_2D = Mesh2D(
         l_x, l_t, f_delta_x, f_delta_t, NodeGen=Node, MAX_NODE_EACH_DIM=10000000, 

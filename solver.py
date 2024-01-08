@@ -171,13 +171,9 @@ class Solver():
 
                 A = self.KellerBox(As, Bs, Cs)
                 delta_params_correct = np.linalg.solve(A,rhs.flat)
-                delta_params = thomas_method_block(As, Bs, Cs, rhs)
-                #delta_params_correct - delta_params.flat
-                self.update_params(delta_params_correct.reshape(-1,3), n+1)
-                #delta_params_correct.reshape(-1,3)
-                #print(delta_params_correct)
-                #self.deltas.append(np.max(delta_params))
-                if np.max(np.abs(delta_params_correct)) < 1.0e-2:
+                delta_params = thomas_method_block(As, Bs, Cs, rhs,delta_params_correct, A)
+                self.update_params(delta_params, n+1)
+                if np.max(np.abs(delta_params)) < 1.0e-2:
                     break
             yield
         

@@ -1,11 +1,11 @@
 import numpy as np
 
-def thomas_method_block(As:np.array, Bs:np.array, Cs:np.array, Ds:np.array):
+def thomas_method_block(As:np.array, Bs:np.array, Cs:np.array, Ds:np.array, corr, A):
     # Forward process
     gama = np.linalg.inv(Bs[0])
     b_star = [gama.dot(Bs[0])]
-    c_star = [b_star[0].dot(Cs[0])]
-    r_star = [b_star[0].dot(Ds[0])]
+    c_star = [gama.dot(Cs[0])]
+    r_star = [gama.dot(Ds[0])]
     for i in range(1,Bs.shape[0]):
         #b_star.append(np.linalg.inv( Bs[i] - As[i].dot(c_star[i-1])))
         #c_star.append(b_star[i].dot( Cs[i]                          ))
@@ -13,12 +13,12 @@ def thomas_method_block(As:np.array, Bs:np.array, Cs:np.array, Ds:np.array):
         gama = np.linalg.inv(Bs[i]-As[i].dot(c_star[i-1]))
         b_star.append(gama.dot(Bs[i]-As[i].dot(c_star[i-1])))
         c_star.append(gama.dot(Cs[i]))
-        r_star.append(Ds[i]-As[i].dot(r_star[i-1]))
+        r_star.append(gama.dot(Ds[i]-As[i].dot(r_star[i-1])))
 
     # Backward process
     response = np.array([r_star[-1]]).reshape((1,-1))
     for i in range(Bs.shape[0]-2, -1, -1):
-        response = np.insert(response, 0, r_star[i]-c_star[i].dot(response[-1]), axis=0)
+        response = np.insert(response, 0, r_star[i]-c_star[i].dot(response[0]), axis=0)
 
     return response
 
